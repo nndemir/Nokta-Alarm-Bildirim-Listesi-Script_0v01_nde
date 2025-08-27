@@ -1,0 +1,4 @@
+1.python -m venv venv
+2.pip install -r requirements.txt
+3.Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+4. .\venv\scripts\activate.ps1

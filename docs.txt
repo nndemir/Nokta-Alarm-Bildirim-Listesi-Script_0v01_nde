@@ -1,0 +1,5 @@
+1. Proje ayaga kaldirilir. (starting.txt)
+2. Mango da /administration/import-export sekmesinden Points ve EventHandlers ayrı ayrı çıktısı alınır. (Check -> DOWNLOAD JSON FILE)
+3. JSON dosyalarinin isimlendirmeleri düzenlenir. "data-points.json, event-handlers.json"
+4. Ana dizine JSON dosyalari eklenir.
+5. python main.py komutuyla xlsl ciktisi alinir.
