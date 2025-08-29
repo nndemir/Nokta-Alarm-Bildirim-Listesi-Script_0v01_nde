@@ -75,7 +75,6 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
                                 "ED_Limit": ed.get("limit", ""),
                                 "ED_Reset_Limit": ed.get("resetLimit", ""),
                                 "ED_States": state_text,
-                                "State": ed.get("state", ""),
                                 "ED_En_Dusuk_Seviye": ed.get("low", ""),
                                 "ED_En_Yuksek_Seviye": ed.get("high", ""),
                                 "Secili Bildirimler": ",".join(
