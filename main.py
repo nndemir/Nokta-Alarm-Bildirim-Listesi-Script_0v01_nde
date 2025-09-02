@@ -26,6 +26,9 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
         for item in ijson.items(f, "dataPoints.item"):
             eventDetectors = item.get("eventDetectors", [])
             tags = item.get("tags", {})
+            # print(tags)
+            # if count > 1000:
+            #     break
             if eventDetectors:
                 try:
                     for ed in eventDetectors:
@@ -63,11 +66,12 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
                                 "Veri_Tipi": item.get("pointLocator", {}).get(
                                     "dataType", ""
                                 ),
-                                "Kampus": tags.get("Kampus", ""),
-                                "Modul": tags.get("Modul", ""),
-                                "Cihaz_Tipi": tags.get("Cihaz Tipi", ""),
-                                "CI_Kodu": tags.get("CI Kodu", ""),
-                                "Bildirim Tagi": tags.get("Bildirim", ""),
+                                # "Kampus": tags.get("Kampus", ""),
+                                # "Modul": tags.get("Modul", ""),
+                                # "Cihaz_Tipi": tags.get("Cihaz Tipi", ""),
+                                # "CI_Kodu": tags.get("CI Kodu", ""),
+                                # "Bildirim Tagi": tags.get("Bildirim", ""),
+                                **tags,
                                 "ED_xid": ed.get("xid", ""),
                                 "ED_Type": ed.get("type", ""),
                                 "ED_Level": ed.get("alarmLevel", ""),
@@ -93,11 +97,12 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
                         "deviceName": item.get("deviceName"),
                         "name": item.get("name"),
                         "Veri_Tipi": item.get("pointLocator", {}).get("dataType", ""),
-                        "Kampus": tags.get("Kampus", ""),
-                        "Modul": tags.get("Modul", ""),
-                        "Cihaz_Tipi": tags.get("Cihaz Tipi", ""),
-                        "CI_Kodu": tags.get("CI Kodu", ""),
-                        "Bildirim Tagi": tags.get("Bildirim", ""),
+                        # "Kampus": tags.get("Kampus", ""),
+                        # "Modul": tags.get("Modul", ""),
+                        # "Cihaz_Tipi": tags.get("Cihaz Tipi", ""),
+                        # "CI_Kodu": tags.get("CI Kodu", ""),
+                        # "Bildirim Tagi": tags.get("Bildirim", ""),
+                        **tags,
                         "ED_xid": "",
                         "ED_Type": "",
                         "ED_Level": "",
@@ -117,23 +122,32 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
     return data_points
 
 
-def main():
+import os
+import pandas as pd
 
+
+def main():
     dataPointsJSONPath = "./data-points.json"
     eventHandlersJSONPath = "./event-handlers.json"
 
+    # Çıktı klasörü
+    output_dir = "./excel_outputs"
+    os.makedirs(output_dir, exist_ok=True)  # klasör yoksa oluştur
+
     # Temel dosya adı
     base_name = "MI-Nokta-Alarm-Bildirim_Listesi"
-    version = "0v01"
+    version = "0v02"
     fileNum = 1
 
     # İlk dosya yolu (numara yok)
-    file_path = f"./{base_name}_{version}_nde.xlsx"
+    file_path = os.path.join(output_dir, f"{base_name}_{version}_nde.xlsx")
 
     # Eğer dosya varsa numara ekle
     while os.path.exists(file_path):
         fileNum += 1
-        file_path = f"./{base_name}_{version}_nde-{fileNum}.xlsx"
+        file_path = os.path.join(
+            output_dir, f"{base_name}_{version}_nde-{fileNum}.xlsx"
+        )
 
     # DataFrame oluştur
     data_points = dataPointsJsonReaderFunc(dataPointsJSONPath, eventHandlersJSONPath)
@@ -141,7 +155,6 @@ def main():
 
     # Excel olarak kaydet
     print("Excel dosyası oluşturuluyor, lütfen bekleyin...")
-
     df.to_excel(file_path, index=False, engine="openpyxl")
     print("Dosya oluşturuldu:", file_path)
 
