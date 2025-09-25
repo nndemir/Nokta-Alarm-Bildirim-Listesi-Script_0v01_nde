@@ -1,3 +1,12 @@
+#
+#
+#
+# Project: TRC MI
+# Task: Nokta Alarm Bildirim Listesi
+#
+#
+#
+
 import pandas as pd
 import ijson
 import logging
@@ -66,11 +75,6 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
                                 "Veri_Tipi": item.get("pointLocator", {}).get(
                                     "dataType", ""
                                 ),
-                                # "Kampus": tags.get("Kampus", ""),
-                                # "Modul": tags.get("Modul", ""),
-                                # "Cihaz_Tipi": tags.get("Cihaz Tipi", ""),
-                                # "CI_Kodu": tags.get("CI Kodu", ""),
-                                # "Bildirim Tagi": tags.get("Bildirim", ""),
                                 **tags,
                                 "ED_xid": ed.get("xid", ""),
                                 "ED_Type": ed.get("type", ""),
@@ -97,11 +101,6 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
                         "deviceName": item.get("deviceName"),
                         "name": item.get("name"),
                         "Veri_Tipi": item.get("pointLocator", {}).get("dataType", ""),
-                        # "Kampus": tags.get("Kampus", ""),
-                        # "Modul": tags.get("Modul", ""),
-                        # "Cihaz_Tipi": tags.get("Cihaz Tipi", ""),
-                        # "CI_Kodu": tags.get("CI Kodu", ""),
-                        # "Bildirim Tagi": tags.get("Bildirim", ""),
                         **tags,
                         "ED_xid": "",
                         "ED_Type": "",
@@ -120,10 +119,6 @@ def dataPointsJsonReaderFunc(dataPointsJSON, eventHandlersJSON):
             count += 1
         logging.info(f"{count} kayit işlendi")
     return data_points
-
-
-import os
-import pandas as pd
 
 
 def main():
